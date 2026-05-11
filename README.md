@@ -50,22 +50,21 @@ int main() {
 ## 2. Общее задание
 
 ### 2.1 Установка инструментов
-
+<img width="1088" height="121" alt="image" src="https://github.com/user-attachments/assets/c59ed46c-0089-4d5f-90fe-89e2da017f6a" />
 ```bash
 sudo apt install clang llvm graphviz
 
-<img width="1088" height="121" alt="image" src="https://github.com/user-attachments/assets/c59ed46c-0089-4d5f-90fe-89e2da017f6a" />
 
 ```
 
 Проверка версии:
+<img width="1103" height="250" alt="image" src="https://github.com/user-attachments/assets/12723b58-743f-454f-b6bc-c2ddd5ac5565" />
 
 ```bash
 clang --version
 opt --version
 dot -V
 
-<img width="1103" height="250" alt="image" src="https://github.com/user-attachments/assets/12723b58-743f-454f-b6bc-c2ddd5ac5565" />
 
 ```
 
@@ -88,10 +87,11 @@ int main() {
 
 ### 2.3 Получение AST
 
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/db9df6d3-24fa-4847-97ca-ea3b44d7e146" />
+
 ```bash
 clang -Xclang -ast-dump -fsyntax-only main.c
 
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/db9df6d3-24fa-4847-97ca-ea3b44d7e146" />
 
 ```
 
@@ -100,12 +100,12 @@ clang -Xclang -ast-dump -fsyntax-only main.c
 вызовом `printf`.
 
 ### 2.4 Генерация LLVM IR
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/838e22d6-693b-433b-bffd-4c4133332f1a" />
 
 ```bash
 clang -O0 -S -emit-llvm main.c -o main_O0.ll
 clang -O2 -S -emit-llvm main.c -o main_O2.ll
 
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/838e22d6-693b-433b-bffd-4c4133332f1a" />
 
 ```
 
@@ -125,11 +125,11 @@ clang -O2 -S -emit-llvm main.c -o main_O2.ll
 - `dce`, `globaldce` — удаление мёртвого кода.
 
 Сравнение IR:
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/2689156a-378f-4f26-bdfa-35a216307f32" />
 
 ```bash
 diff main_O0.ll main_O2.ll
 
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/2689156a-378f-4f26-bdfa-35a216307f32" />
 
 ```
 
@@ -139,13 +139,13 @@ diff main_O0.ll main_O2.ll
 - от `main` остался только вызов `printf` с константой 25.
 
 ### 2.6 Построение CFG
+<img width="1919" height="238" alt="image" src="https://github.com/user-attachments/assets/b35cc280-7296-4c17-9004-c19f9e350a2c" />
 
 ```bash
 opt -dot-cfg -disable-output main_O2.ll
 dot -Tpng .main.dot -o cfg_main.png
 xdg-open cfg_main.png
 
-<img width="1919" height="238" alt="image" src="https://github.com/user-attachments/assets/b35cc280-7296-4c17-9004-c19f9e350a2c" />
 
 ```
 
@@ -185,12 +185,12 @@ int main() {
 > внешней декларации для одиночного определения.
 
 ### 3.2 AST
+<img width="1919" height="1078" alt="image" src="https://github.com/user-attachments/assets/bdc5f5f3-a35a-4e99-9c86-3f29e5ec7ee1" />
 
 Команда:
 ```bash
 clang -Xclang -ast-dump -fsyntax-only main.cpp
 
-<img width="1919" height="1078" alt="image" src="https://github.com/user-attachments/assets/bdc5f5f3-a35a-4e99-9c86-3f29e5ec7ee1" />
 
 ```
 
@@ -219,11 +219,11 @@ clang -Xclang -ast-dump -fsyntax-only main.cpp
 компилятору; реальное решение о встраивании принимается позже на уровне IR.
 
 ### 3.3 LLVM IR при `-O0`
+<img width="1919" height="116" alt="image" src="https://github.com/user-attachments/assets/4aae8143-cc83-47be-8381-daf0f10c2ef9" />
 
 ```bash
 clang -O0 -S -emit-llvm main.cpp -o main_O0.ll
 
-<img width="1919" height="116" alt="image" src="https://github.com/user-attachments/assets/4aae8143-cc83-47be-8381-daf0f10c2ef9" />
 
 ```
 
@@ -260,11 +260,11 @@ define dso_local i32 @main() #0 {
 - вызов `square` присутствует как полноценный `call`.
 
 ### 3.4 LLVM IR при `-O2`
+<img width="1919" height="129" alt="image" src="https://github.com/user-attachments/assets/3812ade5-345a-4db1-9db0-2663ba5a6d12" />
 
 ```bash
 clang -O2 -S -emit-llvm main.cpp -o main_O2.ll
 
-<img width="1919" height="129" alt="image" src="https://github.com/user-attachments/assets/3812ade5-345a-4db1-9db0-2663ba5a6d12" />
 
 ```
 
@@ -296,12 +296,11 @@ __attribute__((always_inline)) inline int square(int x) {
     return x * x;
 }
 ```
+<img width="1919" height="125" alt="image" src="https://github.com/user-attachments/assets/7d1ad12b-a67a-4e11-848a-5949352a8ae7" />
 
 ```bash
 clang -O0 -S -emit-llvm main.cpp -o main_O0.ll
 opt -passes=always-inline -S main_O0.ll -o main_ainl.ll
-
-<img width="1919" height="125" alt="image" src="https://github.com/user-attachments/assets/7d1ad12b-a67a-4e11-848a-5949352a8ae7" />
 
 
 ```
