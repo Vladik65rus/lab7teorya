@@ -1,4 +1,4 @@
-# Лабораторная работа №7
+<img width="1919" height="125" alt="image" src="https://github.com/user-attachments/assets/332d54cd-727e-4637-b324-97b05f579d1c" /># Лабораторная работа №7
 ## Преобразование и анализ кода с использованием Clang и LLVM
 
 **Автор:** _<Савченко Владислав, АВТ-313 гр.>_
@@ -53,6 +53,9 @@ int main() {
 
 ```bash
 sudo apt install clang llvm graphviz
+
+<img width="1088" height="121" alt="image" src="https://github.com/user-attachments/assets/c59ed46c-0089-4d5f-90fe-89e2da017f6a" />
+
 ```
 
 Проверка версии:
@@ -61,6 +64,9 @@ sudo apt install clang llvm graphviz
 clang --version
 opt --version
 dot -V
+
+<img width="1103" height="250" alt="image" src="https://github.com/user-attachments/assets/12723b58-743f-454f-b6bc-c2ddd5ac5565" />
+
 ```
 
 ### 2.2 Исходный код для общей части (`main.c`)
@@ -84,6 +90,9 @@ int main() {
 
 ```bash
 clang -Xclang -ast-dump -fsyntax-only main.c
+
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/db9df6d3-24fa-4847-97ca-ea3b44d7e146" />
+
 ```
 
 В выводе видно `FunctionDecl square 'int (int)'` с параметром `x` и телом `return x * x`,
@@ -95,6 +104,9 @@ clang -Xclang -ast-dump -fsyntax-only main.c
 ```bash
 clang -O0 -S -emit-llvm main.c -o main_O0.ll
 clang -O2 -S -emit-llvm main.c -o main_O2.ll
+
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/838e22d6-693b-433b-bffd-4c4133332f1a" />
+
 ```
 
 В файле `main_O0.ll`:
@@ -116,6 +128,9 @@ clang -O2 -S -emit-llvm main.c -o main_O2.ll
 
 ```bash
 diff main_O0.ll main_O2.ll
+
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/2689156a-378f-4f26-bdfa-35a216307f32" />
+
 ```
 
 После оптимизаций:
@@ -129,6 +144,9 @@ diff main_O0.ll main_O2.ll
 opt -dot-cfg -disable-output main_O2.ll
 dot -Tpng .main.dot -o cfg_main.png
 xdg-open cfg_main.png
+
+<img width="1919" height="238" alt="image" src="https://github.com/user-attachments/assets/b35cc280-7296-4c17-9004-c19f9e350a2c" />
+
 ```
 
 CFG функции `main` после `-O2` состоит из одного базового блока с единственным
@@ -171,6 +189,9 @@ int main() {
 Команда:
 ```bash
 clang -Xclang -ast-dump -fsyntax-only main.cpp
+
+<img width="1919" height="1078" alt="image" src="https://github.com/user-attachments/assets/bdc5f5f3-a35a-4e99-9c86-3f29e5ec7ee1" />
+
 ```
 
 Ключевые узлы (сокращённо):
@@ -201,6 +222,9 @@ clang -Xclang -ast-dump -fsyntax-only main.cpp
 
 ```bash
 clang -O0 -S -emit-llvm main.cpp -o main_O0.ll
+
+<img width="1919" height="116" alt="image" src="https://github.com/user-attachments/assets/4aae8143-cc83-47be-8381-daf0f10c2ef9" />
+
 ```
 
 ```llvm
@@ -239,6 +263,9 @@ define dso_local i32 @main() #0 {
 
 ```bash
 clang -O2 -S -emit-llvm main.cpp -o main_O2.ll
+
+<img width="1919" height="129" alt="image" src="https://github.com/user-attachments/assets/3812ade5-345a-4db1-9db0-2663ba5a6d12" />
+
 ```
 
 ```llvm
@@ -273,6 +300,10 @@ __attribute__((always_inline)) inline int square(int x) {
 ```bash
 clang -O0 -S -emit-llvm main.cpp -o main_O0.ll
 opt -passes=always-inline -S main_O0.ll -o main_ainl.ll
+
+<img width="1919" height="125" alt="image" src="https://github.com/user-attachments/assets/7d1ad12b-a67a-4e11-848a-5949352a8ae7" />
+
+
 ```
 
 В `main_ainl.ll`:
